@@ -1,0 +1,60 @@
+# The suite is self-contained: the reference game and the skeleton are in the
+# repository, so nothing here reaches the network for data.
+name: tests
+
+on:
+  push:
+    branches: [main, 'fix/**']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      # --frozen so the lockfile is used exactly as committed. Resolving afresh
+      # would let a dependency move under the certificate, whose manifest
+      # records solver output.
+      # The solver extra pulls OR-Tools for the CP-SAT cross-check. Without it
+      # those tests skip rather than fail, and the run would be quietly weaker.
+      - run: uv sync --frozen --extra solver
+      - run: uv run ruff check .
+      - run: uv run pytest -q
+
+  certificate:
+    # The stored certificate is an artefact of the code, and the only way a
+    # stale one announces itself is a re-run that disagrees. The manifest
+    # carries no timestamp and no provenance, so this is a byte-for-byte
+    # comparison that works from any commit, on any machine.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --extra solver
+      - run: >
+          uv run --extra solver python scripts/check_certificate.py
+          data/skeleton.json data/certificate
+
+  proof:
+    # The counting proof and the model, run as a reader would run them. The
+    # suite covers the same ground; running the entry points catches a script
+    # that has stopped importing.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --extra solver
+      - run: uv run python scripts/analyse_bound.py
+      - run: uv run --extra solver python scripts/solve_model.py data/skeleton.json
+      - run: >
+          uv run python -m long_chess.verifier data/longest.pgn
+          --expect-plies 17697 --expect-termination checkmate

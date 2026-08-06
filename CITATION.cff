@@ -1,0 +1,47 @@
+# GitHub renders a "Cite this repository" button from this file.
+#
+# One placeholder remains: the arXiv identifier in preferred-citation,
+# added once the math.CO endorsement clears and the preprint is posted.
+# The doi below is the Zenodo *concept* DOI (always resolves to the latest
+# version); the version DOI for v1.0.0 is 10.5281/zenodo.21828026, cited
+# by the paper.
+cff-version: 1.2.0
+message: >-
+  Please cite the paper (see preferred-citation below). Cite the software
+  itself only when discussing the verification tooling specifically.
+type: software
+title: >-
+  long_chess: companion repository for "The maximum length of a chess game
+  under the FIDE Laws is 17,697 plies"
+authors:
+  - family-names: Yim
+    given-names: Junyeop
+    email: junyeobe0315@smail.kongju.ac.kr
+repository-code: "https://github.com/junyeobe0315/long_chess"
+license: MIT
+keywords:
+  - chess
+  - combinatorics
+  - longest chess game
+  - computer-assisted proof
+version: 1.0.0
+date-released: "2026-08-07"
+doi: 10.5281/zenodo.21828025
+preferred-citation:
+  type: unpublished
+  title: "The maximum length of a chess game under the FIDE Laws is 17,697 plies"
+  authors:
+    - family-names: Yim
+      given-names: Junyeop
+      email: junyeobe0315@smail.kongju.ac.kr
+  year: 2026
+  notes: >-
+    Draft manuscript, available as paper/main.pdf in this repository. An
+    arXiv identifier will be added here once the math.CO endorsement
+    clears.
+  # Once posted to arXiv, replace type/notes above with:
+  #   type: article
+  #   identifiers:
+  #     - type: other
+  #       value: "arXiv:XXXX.XXXXX"
+  #       description: arXiv preprint

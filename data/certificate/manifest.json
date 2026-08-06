@@ -1,0 +1,452 @@
+{
+  "artefacts": {
+    "longest.pgn": "8feae073c0f6b8a95ea1b34ad2ecc6fd24fa84b042824a0e419b4646d87285f8",
+    "longest.trace.tsv": "348359d4d8240ab2142fbee966b08afb88a1d9556480aee622ac842103b695a1",
+    "models/checkmate/B.no-lemma.pb.txt": "406390b5ef0c685699aa250dedc590d2eae705298f8dacc414a6a77a2f1a4a40",
+    "models/checkmate/B.pb.txt": "836f587f370bf93b8ecd6c6d85a68c448bb1c53896f3de2ed6f24ddbef6d4476",
+    "models/checkmate/BW.no-lemma.pb.txt": "a796d65767af4628c5c3a0873d2ba088b098d6d445b2b1c47c17b0a129c933c4",
+    "models/checkmate/BW.pb.txt": "640c04bce43fea6903dbbd9d39516727b9189517510ffe00a2480127df831a69",
+    "models/checkmate/BWB.no-lemma.pb.txt": "ef7d90db74b72cabd28f1e65f91701251b4288632bdd7b35cbab2f0689ef01ea",
+    "models/checkmate/BWB.pb.txt": "d5ea70088418da832500d7884eea9dda36bbe69346a35110ec009e09b967ccfc",
+    "models/checkmate/BWBW.no-lemma.pb.txt": "d76514ed2fae4d682304357bb82ec85147d97b55c9d9bb78819fe262a70b41af",
+    "models/checkmate/BWBW.pb.txt": "656fb8e4ab015efc23a1f12f297283939ecee3909a3bbe405dcc6d6a708ab410",
+    "models/checkmate/W.no-lemma.pb.txt": "0f12317134c49047851c9506c16e3a91e9c9ae2a2a4448875cef79cfa0841098",
+    "models/checkmate/W.pb.txt": "ee294c1423dec05dc807460ec667b8179d59a8201377925477036bf78bf4bd8a",
+    "models/checkmate/WB.no-lemma.pb.txt": "c281d116163e1a00fb009e13dc59af99afc3e31aad4d3fa9eb6922ed0f0004b6",
+    "models/checkmate/WB.pb.txt": "649b2183c1053cba14ada28899860710bec81747542155639f57f7a8e87ba952",
+    "models/checkmate/WBW.no-lemma.pb.txt": "cfad4e1bde725343159a11abd911d2f81a094edf0033a8a8fe576fab5ba1c088",
+    "models/checkmate/WBW.pb.txt": "685014a2536f3cca641fcdebef7dfc433b7956cc855854d246c71e84f45d45a7",
+    "models/checkmate/WBWB.no-lemma.pb.txt": "0d176b9b0a91ec15e4f125e2b5a79fc904a66696a249d6a78e5188cfddfbae68",
+    "models/checkmate/WBWB.pb.txt": "8d2725151b2e8d44d93d6d1a558d67b56bc52d447e0a9cf27c6783346a1d6259",
+    "models/draw/B.no-lemma.pb.txt": "4f9dbfc3a7eb69e8a067d5b7f3aa6f0c22aa8ea97b81f35d88909c52ad7dc333",
+    "models/draw/B.pb.txt": "dd1109a50c5cdf11ba5913a5fe6c4c9939a9ac5a21f4db44f38fdec7d005db63",
+    "models/draw/BW.no-lemma.pb.txt": "2141e5fb3b8bf219d1d9729f49d4c24ffdbe40a0048edd6d0f160ed9def99a35",
+    "models/draw/BW.pb.txt": "38b1db708f49272c7f26e75ba33dd93bc4b8bfbef034c2172116e2f498bdeaf8",
+    "models/draw/BWB.no-lemma.pb.txt": "52916ac2955d206d77887a870306919ab1c1df240959463eafe4caa27e7da7d8",
+    "models/draw/BWB.pb.txt": "b9331a6caa71a2a55b8304a504401bf326c69de8303699c21991e209dd459e58",
+    "models/draw/BWBW.no-lemma.pb.txt": "0a64fc694b5dab12501800e4f8c2341ef72374410f9234c6447b9334ca5e0572",
+    "models/draw/BWBW.pb.txt": "762907732848c57c89e0113bd4ecc658981d079c64f68515ff7323105c8135cc",
+    "models/draw/W.no-lemma.pb.txt": "9a65dba11f47bba306704c859bd1c9e304f48972eca4b2e335200a39be4203c5",
+    "models/draw/W.pb.txt": "5d9eede7800b7071056e855158a2d85b146fc7e9ef0412f16000d6feefed929c",
+    "models/draw/WB.no-lemma.pb.txt": "3b9864d275a52ef7e545c20cc738fe7a49a9916388e5c48ca809cf4a3f299497",
+    "models/draw/WB.pb.txt": "142f5dea0f2ff05989113e4e973c4d09984f951112c5998b38e98f43b5751877",
+    "models/draw/WBW.no-lemma.pb.txt": "4203f948c494e8d76971eaceecb956bbf9d76906ceff7380f534edf3c06daedf",
+    "models/draw/WBW.pb.txt": "4ff0a0cd96a20e6615cc3baa0dcc0cbb958810e19820c92f0759a9c02fd06a9e",
+    "models/draw/WBWB.no-lemma.pb.txt": "0b7ff65a6a9b3fe9f63be354e7db78f02f1b26ec94809be2efad0894416489a3",
+    "models/draw/WBWB.pb.txt": "2eaedd5bcf8c6a02fca32af5e2aa96ce2c0b8d4d584d3cf0232bd991c9c74528",
+    "skeleton.json": "e409fe926fc213dda1738c7e4957d0ec05abaec4f46c5edad06e4f7d2a7ad853"
+  },
+  "artefacts_not_committed": [
+    "longest.trace.tsv"
+  ],
+  "bound_terms": {
+    "captures_plus_closing": {
+      "bound": 30,
+      "capturable_pieces": 30,
+      "profiles": {
+        "all-captured": {
+          "captures": 30,
+          "closing": 0,
+          "total": 30,
+          "why": "every non-king piece goes, but the thirtieth capture leaves king against king, which is dead and ends the game on the spot"
+        },
+        "checkmate": {
+          "captures": 29,
+          "closing": 1,
+          "total": 30,
+          "why": "the mating side keeps something to mate with, so one of the 30 survives; the mate itself may be quiet and close a segment"
+        }
+      }
+    },
+    "captures_plus_closing_bound": 30,
+    "checkmate": {
+      "captures": 29,
+      "closing_segment": 1,
+      "overlaps": 8,
+      "pawn_moves": 96,
+      "total": 118
+    },
+    "draw": {
+      "captures": 30,
+      "closing_segment": 0,
+      "overlaps": 8,
+      "pawn_moves": 96,
+      "total": 118
+    },
+    "equality_conditions": {
+      "captures_plus_closing": 30,
+      "every_pawn_promotes": true,
+      "moves_per_pawn": 6,
+      "overlaps": 8,
+      "pawn_moves": 96,
+      "resolved_files": 8
+    },
+    "note": "K = (P - O) + (C + T). Neither half knows how the game ends, which is why one bound covers checkmate and every draw alike.",
+    "pawn_minus_overlap": {
+      "maximiser": {
+        "overlaps": 8,
+        "pawn_moves": 96,
+        "resolved_files": 8,
+        "value": 88
+      },
+      "overlap_floor": "O >= f",
+      "pawn_moves_ceiling": "min(96, 80 + 2f)",
+      "resolved_origin_pair_move_cap": 12,
+      "unresolved_origin_pair_move_cap": 10
+    },
+    "pawn_minus_overlap_bound": 88,
+    "total": 118
+  },
+  "claim": {
+    "K_bound": 118,
+    "attained_by": "longest.pgn (in this directory)",
+    "endings_covered": [
+      "checkmate",
+      "draw"
+    ],
+    "max_plies": 17697,
+    "minimum_switches": 3,
+    "minimum_switches_by_ending": {
+      "checkmate": 3,
+      "draw": 3
+    },
+    "statement": "no legal chess game exceeds 17,697 ply"
+  },
+  "counting_proof": {
+    "max_plies": 17697,
+    "minimum_switches": 3,
+    "minimum_switches_at_max_k": 3,
+    "note": "S >= 3 is conditional on K = 118 and is false in general: 1. Nf3 Nf6 2. Ng1 Ng8 played four times is a legal game ending in fivefold repetition with K = 1 and S = 0. The theorem is a case split, recorded below as `ply_bound`.",
+    "ply_bound": {
+      "at_max_k": 17697,
+      "below_max_k": 17550,
+      "binding_case": "K = 118",
+      "max_critical_segments": 118,
+      "max_plies": 17697,
+      "statement": "K ≤ 118, and\n  K ≤ 117:  L ≤ 150·117 = 17,550   (S ≥ 0 is enough)\n  K = 118:  S ≥ 3, so L ≤ 150·118 − 3 = 17,697\n  therefore L ≤ 17,697, attained in the K = 118 case"
+    },
+    "refuted": [
+      {
+        "colours": [
+          "B"
+        ],
+        "detail": "K = 118 forces P = 96, so all 16 pawns move 6 times each. A pawn move is a critical move of its own colour, and this shape gives W no block to make one in, so only B's 8 pawns can move: P ≤ 48",
+        "ground": "counting",
+        "pawn_moves_available": 48,
+        "pawn_moves_required": 96,
+        "refuted": true,
+        "shortfall": 48,
+        "switches": 0
+      },
+      {
+        "colours": [
+          "W"
+        ],
+        "detail": "K = 118 forces P = 96, so all 16 pawns move 6 times each. A pawn move is a critical move of its own colour, and this shape gives B no block to make one in, so only W's 8 pawns can move: P ≤ 48",
+        "ground": "counting",
+        "pawn_moves_available": 48,
+        "pawn_moves_required": 96,
+        "refuted": true,
+        "shortfall": 48,
+        "switches": 1
+      },
+      {
+        "colours": [
+          "B",
+          "W"
+        ],
+        "detail": "C ≥ 29 and W can take at most 15 units, so B makes ≥14 captures — all in block 1, before W has made any critical move. Only 7 of W's units did not start as pawns, so ≥7 pawn-origin W units are taken having made no pawn move, costing ≥42 pawn moves: P ≤ 54 against the 96 that K = 118 demands",
+        "ground": "counting",
+        "pawn_moves_available": 54,
+        "pawn_moves_required": 96,
+        "refuted": true,
+        "shortfall": 42,
+        "switches": 1
+      },
+      {
+        "colours": [
+          "W",
+          "B"
+        ],
+        "detail": "C ≥ 29 and B can take at most 15 units, so W makes ≥14 captures — all in block 1, before B has made any critical move. Only 7 of B's units did not start as pawns, so ≥7 pawn-origin B units are taken having made no pawn move, costing ≥42 pawn moves: P ≤ 54 against the 96 that K = 118 demands",
+        "ground": "counting",
+        "pawn_moves_available": 54,
+        "pawn_moves_required": 96,
+        "refuted": true,
+        "shortfall": 42,
+        "switches": 2
+      },
+      {
+        "colours": [
+          "B",
+          "W",
+          "B"
+        ],
+        "detail": "C ≥ 29 forces White to make ≥14 captures, all in the middle block, so ≥7 pawn-origin Black units die there and must finish their 6 pawn moves in block 1. In block 1 White makes no critical move and loses no pawn (a White pawn taken there would make none of its 6), so White's home rank is intact and the lemma caps a Black pawn at 4. Each of the 7 is 2 short: P ≤ 82 against 96",
+        "ground": "home-rank lemma",
+        "pawn_moves_available": 82,
+        "pawn_moves_required": 96,
+        "refuted": true,
+        "shortfall": 14,
+        "switches": 2
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "INFEASIBLE",
+      "cp_sat_without_lemma_feasible": false,
+      "ending": "checkmate",
+      "independent_account": "checkmate, opened=True, pawns lost W8/B0, 15 captures, closing=1, 0 files resolved, 48 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 64,
+      "independent_max_pawn_moves": 48,
+      "refuted_by_counting": true,
+      "shape": "B",
+      "switches": 0
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "INFEASIBLE",
+      "cp_sat_without_lemma_feasible": false,
+      "ending": "checkmate",
+      "independent_account": "checkmate, opened=True, pawns lost W0/B8, 15 captures, closing=1, 0 files resolved, 48 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 64,
+      "independent_max_pawn_moves": 48,
+      "refuted_by_counting": true,
+      "shape": "W",
+      "switches": 1
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "INFEASIBLE",
+      "cp_sat_without_lemma_feasible": false,
+      "ending": "checkmate",
+      "independent_account": "checkmate, opened=True, pawns lost W1/B8, 23 captures, closing=1, 5 files resolved, 90 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 109,
+      "independent_max_pawn_moves": 90,
+      "refuted_by_counting": true,
+      "shape": "B W",
+      "switches": 1
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "INFEASIBLE",
+      "cp_sat_without_lemma_feasible": false,
+      "ending": "checkmate",
+      "independent_account": "checkmate, opened=True, pawns lost W8/B1, 23 captures, closing=1, 5 files resolved, 90 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 109,
+      "independent_max_pawn_moves": 90,
+      "refuted_by_counting": true,
+      "shape": "W B",
+      "switches": 2
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "OPTIMAL",
+      "cp_sat_without_lemma_feasible": true,
+      "ending": "checkmate",
+      "independent_account": "checkmate, opened=True, pawns lost W8/B7, 29 captures, closing=1, 5 files resolved, 90 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 115,
+      "independent_max_pawn_moves": 90,
+      "refuted_by_counting": true,
+      "shape": "B W B",
+      "switches": 2
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "OPTIMAL",
+      "cp_sat_without_lemma_feasible": true,
+      "ending": "checkmate",
+      "independent_account": "checkmate, opened=True, pawns lost W7/B8, 29 captures, closing=1, 5 files resolved, 90 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 115,
+      "independent_max_pawn_moves": 90,
+      "refuted_by_counting": false,
+      "shape": "W B W",
+      "switches": 3
+    },
+    {
+      "agree": true,
+      "cp_sat": "OPTIMAL",
+      "cp_sat_feasible": true,
+      "cp_sat_without_lemma": "OPTIMAL",
+      "cp_sat_without_lemma_feasible": true,
+      "ending": "checkmate",
+      "independent_account": "checkmate, opened=False, pawns lost W7/B8, 29 captures, closing=1, 8 files resolved, 96 pawn moves",
+      "independent_feasible": true,
+      "independent_max_k": 118,
+      "independent_max_pawn_moves": 96,
+      "refuted_by_counting": false,
+      "shape": "B W B W",
+      "switches": 3
+    },
+    {
+      "agree": true,
+      "cp_sat": "OPTIMAL",
+      "cp_sat_feasible": true,
+      "cp_sat_without_lemma": "OPTIMAL",
+      "cp_sat_without_lemma_feasible": true,
+      "ending": "checkmate",
+      "independent_account": "checkmate, opened=False, pawns lost W8/B7, 29 captures, closing=1, 8 files resolved, 96 pawn moves",
+      "independent_feasible": true,
+      "independent_max_k": 118,
+      "independent_max_pawn_moves": 96,
+      "refuted_by_counting": false,
+      "shape": "W B W B",
+      "switches": 4
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "INFEASIBLE",
+      "cp_sat_without_lemma_feasible": false,
+      "ending": "draw",
+      "independent_account": "draw, opened=True, pawns lost W8/B0, 15 captures, closing=1, 0 files resolved, 48 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 64,
+      "independent_max_pawn_moves": 48,
+      "refuted_by_counting": true,
+      "shape": "B",
+      "switches": 0
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "INFEASIBLE",
+      "cp_sat_without_lemma_feasible": false,
+      "ending": "draw",
+      "independent_account": "draw, opened=True, pawns lost W0/B8, 15 captures, closing=1, 0 files resolved, 48 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 64,
+      "independent_max_pawn_moves": 48,
+      "refuted_by_counting": true,
+      "shape": "W",
+      "switches": 1
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "INFEASIBLE",
+      "cp_sat_without_lemma_feasible": false,
+      "ending": "draw",
+      "independent_account": "draw, opened=True, pawns lost W1/B8, 23 captures, closing=1, 5 files resolved, 90 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 109,
+      "independent_max_pawn_moves": 90,
+      "refuted_by_counting": true,
+      "shape": "B W",
+      "switches": 1
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "INFEASIBLE",
+      "cp_sat_without_lemma_feasible": false,
+      "ending": "draw",
+      "independent_account": "draw, opened=True, pawns lost W8/B1, 23 captures, closing=1, 5 files resolved, 90 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 109,
+      "independent_max_pawn_moves": 90,
+      "refuted_by_counting": true,
+      "shape": "W B",
+      "switches": 2
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "OPTIMAL",
+      "cp_sat_without_lemma_feasible": true,
+      "ending": "draw",
+      "independent_account": "draw, opened=True, pawns lost W7/B8, 29 captures, closing=1, 5 files resolved, 90 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 115,
+      "independent_max_pawn_moves": 90,
+      "refuted_by_counting": true,
+      "shape": "B W B",
+      "switches": 2
+    },
+    {
+      "agree": true,
+      "cp_sat": "INFEASIBLE",
+      "cp_sat_feasible": false,
+      "cp_sat_without_lemma": "OPTIMAL",
+      "cp_sat_without_lemma_feasible": true,
+      "ending": "draw",
+      "independent_account": "draw, opened=True, pawns lost W7/B8, 29 captures, closing=1, 5 files resolved, 90 pawn moves",
+      "independent_feasible": false,
+      "independent_max_k": 115,
+      "independent_max_pawn_moves": 90,
+      "refuted_by_counting": false,
+      "shape": "W B W",
+      "switches": 3
+    },
+    {
+      "agree": true,
+      "cp_sat": "OPTIMAL",
+      "cp_sat_feasible": true,
+      "cp_sat_without_lemma": "OPTIMAL",
+      "cp_sat_without_lemma_feasible": true,
+      "ending": "draw",
+      "independent_account": "draw, opened=False, pawns lost W7/B8, 29 captures, closing=1, 8 files resolved, 96 pawn moves",
+      "independent_feasible": true,
+      "independent_max_k": 118,
+      "independent_max_pawn_moves": 96,
+      "refuted_by_counting": false,
+      "shape": "B W B W",
+      "switches": 3
+    },
+    {
+      "agree": true,
+      "cp_sat": "OPTIMAL",
+      "cp_sat_feasible": true,
+      "cp_sat_without_lemma": "OPTIMAL",
+      "cp_sat_without_lemma_feasible": true,
+      "ending": "draw",
+      "independent_account": "draw, opened=False, pawns lost W7/B8, 29 captures, closing=1, 8 files resolved, 96 pawn moves",
+      "independent_feasible": true,
+      "independent_max_k": 118,
+      "independent_max_pawn_moves": 96,
+      "refuted_by_counting": false,
+      "shape": "W B W B",
+      "switches": 4
+    }
+  ],
+  "game": {
+    "critical_segments": 118,
+    "plies": 17697,
+    "plies_differing_from_reference": 17032,
+    "reference_sha256": "6700b7b70260c9b4448d58c610601cab938dd0e01392bd876d3379630de680bb",
+    "sha256": "8feae073c0f6b8a95ea1b34ad2ecc6fd24fa84b042824a0e419b4646d87285f8",
+    "slack": 0,
+    "termination": "checkmate"
+  },
+  "ruled_out_by_lemma_alone": [
+    "B W B (checkmate)",
+    "W B W (checkmate)",
+    "B W B (draw)",
+    "W B W (draw)"
+  ]
+}

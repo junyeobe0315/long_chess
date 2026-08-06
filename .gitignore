@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Verification traces: regenerate with
+#   uv run python -m long_chess.verifier <pgn> --trace <out>
+*.trace.tsv
+*.trace.jsonl
+
+# M3 batch output: regenerate with scripts/generate_games.py
+data/m3/runs.jsonl
+
+# Certificate: rebuild with scripts/certify.py (contains a 1.5MB trace)
+data/certificate/longest.trace.tsv
+
+# Derived and regenerable — see data/README.md
+data/rebuilt.pgn
+data/m3/
