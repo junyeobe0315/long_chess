@@ -1,0 +1,267 @@
+% longchess.sty — shared beamer look for the two decks of
+%   "The maximum length of a chess game under the FIDE Laws is 17,697 plies".
+%
+% This is beamer's own Madrid theme --- rounded blue title box, tripartite
+% footline, shadowed blocks --- with nothing about the furniture changed.
+% What this file adds on top is only content machinery: the statement and
+% proof blocks, the vocabulary the diagrams are labelled with, and colour
+% aliases so lcfigures.sty tracks the theme's palette.  Loaded by
+% slides-en.tex and slides-ko.tex; the Korean deck adds xeCJK and nothing
+% else changes.
+%
+% Geometry note: aspectratio=169 makes the page exactly 16cm x 9cm.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{longchess}[2026/08/07 Long-chess talk theme]
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc,positioning,arrows.meta,decorations.pathreplacing,
+  decorations.markings,fit,shapes.geometric,shapes.misc,backgrounds,
+  patterns,chains,scopes}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\RequirePackage{booktabs}
+\RequirePackage{qrcode}
+
+% ---------------------------------------------------------------- palette
+% The standard beamer blue, used the standard beamer way: blue structure,
+% red for alerts, green for examples and proofs.  Figures address these by
+% role (dark / mid / pale / accent / green), so re-colouring the deck is a
+% matter of editing this block alone.
+\definecolor{lcdark}{HTML}{3333B2}     % structure: title bar, headers
+\definecolor{lcdarker}{HTML}{22226E}   % section pages
+\definecolor{lcpale}{HTML}{E7E7F7}     % block body, light fills
+\definecolor{lcpaled}{HTML}{D3D3EC}    % footline, shaded fills
+\definecolor{lcmid}{HTML}{7B7BC9}      % rules, secondary strokes
+\definecolor{lcaccent}{HTML}{C00000}   % alerts; the three lost plies
+\definecolor{lcgreen}{HTML}{0E7A4A}    % proofs, computation, secondary data
+\definecolor{lcink}{HTML}{151530}      % body text
+\definecolor{lcgrey}{HTML}{6E6E85}     % de-emphasis
+\definecolor{lcbg}{HTML}{FFFFFF}       % page background
+
+% Semantic aliases used by the figures, so a palette change stays here.
+\colorlet{lcwhite}{lcpale}             % White's colour in diagrams
+\colorlet{lcblack}{lcdark}             % Black's colour in diagrams
+
+% ------------------------------------------------------------------ fonts
+% Beamer's default sans, at Latin Modern's outline quality --- the face the
+% stock themes are drawn with.  Nothing else is loaded: swapping the text
+% font is exactly what makes a deck stop looking like the template.
+\RequirePackage{lmodern}
+
+% ------------------------------------------------------------- the theme
+% Madrid: \useoutertheme{infolines} + \useinnertheme{rounded} + shadows.
+% Its structure colour is beamer's default blue, the same #3333B2 the
+% palette above names lcdark --- so the diagrams and the furniture agree
+% without either being adjusted to the other.
+\usetheme{Madrid}
+
+% Two concessions, both about density rather than style: a full-width
+% diagram wants the margins back, and captions here are one line under a
+% picture rather than numbered floats.
+\setbeamersize{text margin left=0.85em,text margin right=0.85em}
+\setbeamertemplate{caption}{\insertcaption}
+
+% ------------------------------------------------- statements and proofs
+% The deck states results the way the paper does, and cites the paper's own
+% numbering so a listener can find any of them afterwards.  Numbers are
+% written by hand rather than counted, precisely so that they agree with
+% main.tex and not with the order of the slides.
+%   \begin{lcstate}{정의 2.1}{critical move} ... \end{lcstate}   blue
+%   \begin{lcthm}{정리 3.8}{}                ... \end{lcthm}     red
+%   \begin{lcproof}{증명}                    ... \end{lcproof}   green
+\newcommand{\lc@head}[2]{#1\ifx\relax#2\relax\else\ \textnormal{(#2)}\fi}
+\newenvironment{lcstate}[2]{\begin{block}{\lc@head{#1}{#2}}}{\end{block}}
+\newenvironment{lcthm}[2]{\begin{alertblock}{\lc@head{#1}{#2}}}{\end{alertblock}}
+\newenvironment{lcproof}[1][\lcsProof]{%
+  \begin{exampleblock}{#1}\small}{\end{exampleblock}}
+% End-of-proof marker that does not depend on amsthm being loaded.
+\providecommand{\qed}{}
+\renewcommand{\qed}{\hfill$\square$}
+\providecommand{\qedhere}{}
+\renewcommand{\qedhere}{\hfill$\square$}
+% Numbered proof steps, tight enough to sit inside a block.
+% Madrid renders enumerate items as balls, which swallows the step number;
+% proofs want to be able to say "by (2)".
+\newenvironment{lcsteps}{%
+  \setbeamertemplate{enumerate items}[default]%
+  \begin{enumerate}[(1)]\setlength{\itemsep}{1pt}\setlength{\parskip}{0pt}}%
+  {\end{enumerate}}
+\setbeamersize{text margin left=0.85em,text margin right=0.85em}
+
+% ------------------------------------------------------------- title page
+% Madrid's own \titlepage; a second line goes in \subtitle{...}, the way
+% the theme expects.  \lctitlenote is kept as a no-op so an older deck
+% still compiles --- a conditional cannot live inside a frame body, which
+% beamer re-scans, so there is nothing to switch on here.
+\newcommand{\lctitlenote}{}
+\newcommand{\lctitleframe}{%
+  \begin{frame}[plain,noframenumbering]
+    \titlepage
+  \end{frame}%
+}
+
+% ------------------------------------------------------------ part divider
+% A plain section page in the theme's own colours.  \lcpart{III}{title}{one
+% line}; the \section also feeds beamer's table of contents.
+\newcommand{\lcpart}[3]{%
+  \section{#1.~#2}%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    \begin{center}
+      {\usebeamercolor[fg]{structure}\usebeamerfont{title}#1.~#2\par}
+      \vskip0.45cm
+      {\usebeamercolor[fg]{structure}\rule{4cm}{1pt}\par}
+      \vskip0.45cm
+      {\small #3\par}
+    \end{center}
+    \vfill
+  \end{frame}%
+}
+
+% ------------------------------------------------------------- part map
+% A recurring six-box route map; \lcmap{n} highlights part n (0-based).
+% Each deck defines \lcmapn (how many parts) and \lcmapnames (that many
+% comma-separated entries), e.g.
+%   \def\lcmapn{7}
+%   \def\lcmapnames{{0.~Story},{I.~Rules},...,{VI.~Meaning}}
+% The entries double as the part-divider titles, so keep them short --- the
+% boxes divide 14.6cm between them and nothing is allowed to wrap.
+\def\lcmapn{6}
+\newcommand{\lcmap}[1]{%
+  \pgfmathsetmacro{\lc@pitch}{14.6/\lcmapn}
+  \pgfmathsetmacro{\lc@bw}{\lc@pitch-0.18}
+  \begin{tikzpicture}[x=1cm,y=1cm]
+    \foreach \lc@nm [count=\j from 0] in \lcmapnames {%
+      \pgfmathsetmacro{\lc@x}{\j*\lc@pitch}
+      \ifnum\j=#1
+        \fill[lcdark,rounded corners=2pt] (\lc@x,0) rectangle ++(\lc@bw,1.0);
+        \node[text=lcpale,font=\scriptsize\bfseries,align=center,
+          text width={\lc@bw cm-4pt}] at ({\lc@x+\lc@bw/2},0.5) {\lc@nm};
+      \else
+        \fill[lcpaled,rounded corners=2pt] (\lc@x,0.16) rectangle ++(\lc@bw,0.68);
+        \node[text=lcgrey,font=\scriptsize,align=center,
+          text width={\lc@bw cm-4pt}] at ({\lc@x+\lc@bw/2},0.5) {\lc@nm};
+      \fi
+      \pgfmathtruncatemacro{\lc@last}{\lcmapn-1}
+      \ifnum\j<\lc@last
+        \draw[lcmid,line width=0.7pt] ({\lc@x+\lc@bw},0.5) -- ++(0.18,0);
+      \fi}
+  \end{tikzpicture}%
+}
+
+% ------------------------------------------------------- figure vocabulary
+% The diagrams in lcfigs.tex are drawn once and labelled through these
+% macros.  English is the default; slides-ko.tex \renewcommand's the block
+% and gets the same pictures in Korean.  Keep every one of them short --- a
+% diagram label that wraps is a diagram label that is too long.
+\newcommand{\lcstring}[2]{\expandafter\newcommand\csname #1\endcsname{#2}}
+\lcstring{lcsPly}{ply}
+\lcstring{lcsClock}{halfmove clock}
+\lcstring{lcsCritical}{critical move}
+\lcstring{lcsQuiet}{quiet plies}
+\lcstring{lcsGameEnds}{game ends}
+\lcstring{lcsSegment}{segment}
+\lcstring{lcsSegments}{segments}
+\lcstring{lcsSwitch}{switch}
+\lcstring{lcsSwitches}{switches}
+\lcstring{lcsWhite}{White}
+\lcstring{lcsBlack}{Black}
+\lcstring{lcsPawnMoves}{pawn moves}
+\lcstring{lcsCaptures}{captures}
+\lcstring{lcsOverlaps}{overlaps}
+\lcstring{lcsClosing}{closing segment}
+\lcstring{lcsResolved}{resolved files $f$}
+\lcstring{lcsPawn}{pawn}
+\lcstring{lcsPawns}{pawns}
+\lcstring{lcsHomeRank}{home rank}
+\lcstring{lcsPromotes}{promotes}
+\lcstring{lcsStuck}{stuck}
+\lcstring{lcsCaptured}{captured}
+\lcstring{lcsNoPawnMove}{never moves}
+\lcstring{lcsImpossible}{impossible}
+\lcstring{lcsSurvives}{the only survivors}
+\lcstring{lcsFirstPhase}{first phase}
+\lcstring{lcsMiddleBlock}{middle block}
+\lcstring{lcsSameColour}{same colour}
+\lcstring{lcsDiffColour}{colour changes}
+\lcstring{lcsEven}{even length}
+\lcstring{lcsOdd}{odd length}
+\lcstring{lcsTypicalGame}{a tournament game}
+\lcstring{lcsLongestGame}{the longest game}
+\lcstring{lcsPlies}{plies}
+\lcstring{lcsDeadPos}{dead position}
+\lcstring{lcsMate}{checkmate}
+\lcstring{lcsBudget}{budget}
+\lcstring{lcsSpent}{spent}
+\lcstring{lcsTarget}{target}
+% one-line reasons attached to the six refuted patterns
+\lcstring{lcsWhyOne}{only one side moves pawns}
+\lcstring{lcsWhyTwo}{14 victims never move}
+\lcstring{lcsWhyThree}{home rank caps them at four}
+% verification pipeline
+\lcstring{lcsVerifier}{independent verifier}
+\lcstring{lcsTrace}{per-ply trace}
+\lcstring{lcsVerdict}{verdict}
+\lcstring{lcsChecker}{arithmetic checker}
+\lcstring{lcsAgree}{same verdict}
+% whole phrases: word order differs too much between the two languages for
+% these to be assembled from the single words above
+\lcstring{lcsCritOfX}{every critical move of $X$}
+\lcstring{lcsCritOfY}{every critical move of $Y$}
+\lcstring{lcsTwoBlockLoss}{$\ge7$ $Y$ pawns captured, so they never move}
+\lcstring{lcsThreeBlockNeed}{$\ge7$ $X$ pawns captured $\Rightarrow$
+  all $6\times7$ pawn moves fall in the first phase}
+\lcstring{lcsThreeBlockCap}{but the home rank caps each pawn at $4$}
+% statement and proof furniture
+\lcstring{lcsProof}{Proof}
+\lcstring{lcsSketch}{Proof sketch}
+% the three automatic terminations, each with its own picture
+\lcstring{lcsRepetition}{fivefold repetition}
+\lcstring{lcsSamePos}{the same position, five times}
+\lcstring{lcsSeventyFive}{75 moves by each player}
+\lcstring{lcsClockHits}{the clock reaches 150}
+\lcstring{lcsDeadTitle}{dead position}
+\lcstring{lcsNoMate}{no continuation can mate}
+% the inclusion--exclusion picture
+\lcstring{lcsOnlyPawn}{pawn moves only}
+\lcstring{lcsOnlyCap}{captures only}
+\lcstring{lcsBoth}{both at once}
+\lcstring{lcsCritMoves}{critical moves}
+% the pawn-budget board
+\lcstring{lcsSixRanks}{six ranks to promotion}
+\lcstring{lcsSixteen}{$16$ pawns $\times$ $6$ moves}
+% the scale grid
+\lcstring{lcsGamesWorth}{tournament games, end to end}
+
+% -------------------------------------------------------------- utilities
+% A caption line under a figure, in the deck's quiet grey.
+\newcommand{\lccap}[1]{{\footnotesize\color{lcgrey}#1}}
+% The result, wherever it needs to be shouted.
+\newcommand{\lcnum}[1]{{\color{lcaccent}\bfseries #1}}
+% A framed pull-quote, used for the "I believe" sentence and its kin.
+\newcommand{\lcquote}[2]{%
+  \begin{tikzpicture}
+    \node[fill=lcpale,draw=lcmid,line width=0.8pt,rounded corners=3pt,
+      inner sep=9pt,text width=\dimexpr\textwidth-30pt\relax,align=center]
+      (q) {#1};
+    \node[anchor=north east,text=lcgrey,font=\scriptsize]
+      at ($(q.south east)+(0,-2pt)$) {#2};
+  \end{tikzpicture}%
+}
+% A screenshot slot that renders the image if present and a labelled
+% placeholder if not, so the deck always compiles.  #1 width, #2 path,
+% #3 what to capture.
+\newcommand{\lcshot}[3]{%
+  \IfFileExists{#2}{\includegraphics[width=#1]{#2}}{%
+    \begin{tikzpicture}
+      \node[draw=lcmid,line width=0.8pt,dashed,rounded corners=3pt,
+        fill=lcpaled,inner sep=6pt,minimum height=3.2cm,
+        text width=\dimexpr#1-16pt\relax,align=center,
+        font=\scriptsize,text=lcgrey] {#3};
+    \end{tikzpicture}}%
+}
+
+% The diagrams, last: they use the palette and the vocabulary above.
+\RequirePackage{lcfigures}
+
+\endinput

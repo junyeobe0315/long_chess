@@ -399,12 +399,34 @@ class TestSwitchLowerBound:
         so a game with S ≤ 2 overall has a critical-move actor sequence with
         S ≤ 2, which is one of the same five shapes.
         """
-        from long_chess.bound import check_terminal_endpoint_free
+        from long_chess.bound import (
+            check_dropping_terminal_endpoint_never_adds_a_switch,
+        )
 
-        check = check_terminal_endpoint_free()
-        assert check.free
+        check = check_dropping_terminal_endpoint_never_adds_a_switch()
+        assert check.never_adds_a_switch
         assert check.worst_increase <= 0
         assert check.shapes_checked >= 40
+
+    def test_appending_the_terminal_endpoint_can_add_one(self):
+        """The direction that is *false*, pinned so the two are never confused.
+
+        Only the deletion direction is used, and it has to be: a critical-move
+        pattern `B` closed by a quiet White mate is the endpoint pattern `B W`,
+        which has one switch more, not fewer. Appending is monotone the other
+        way — it never lowers the block count, and starting a new block costs
+        exactly one switch.
+        """
+        from long_chess.bound import alternating_shapes
+
+        assert switches(("B",)) == 0 and switches(("B", "W")) == 1
+
+        for critical in alternating_shapes(11):
+            for appended in ("B", "W"):
+                whole = critical if critical[-1] == appended else (*critical, appended)
+                new_block = len(whole) - len(critical)
+                assert new_block in (0, 1)
+                assert switches(whole) - switches(critical) == new_block
 
     def test_the_two_readings_of_a_shape(self):
         """Concretely: B W B whose last block is only the mate has critical
@@ -422,7 +444,7 @@ class TestSwitchLowerBound:
         to `switches()` that broke the correspondence would fail loudly."""
         from long_chess.bound import blocks
 
-        assert blocks.check_terminal_endpoint_free.__doc__
+        assert blocks.check_dropping_terminal_endpoint_never_adds_a_switch.__doc__
         assert switch_lower_bound().minimum_switches == 3
 
     def test_every_one_of_them_is_refuted(self):

@@ -42,6 +42,55 @@ jobs:
           uv run --extra solver python scripts/check_certificate.py
           data/skeleton.json data/certificate
 
+  movegen:
+    # The second move generator. Every other job here decides chess questions
+    # with python-chess, so python-chess's move generation is inside the trusted
+    # base; checker/longest_check.c is an independent C implementation, and this
+    # job is where the two are made to agree — the per-ply trace and the whole
+    # legal-move set at every position of the witness, compared byte for byte.
+    #
+    # Two compilers, because agreement between them is a real check against a
+    # miscompilation, which reading the source would never find. Both legs
+    # compare against the same python-generated reference files, so agreeing with
+    # the reference is agreeing with each other.
+    #
+    # Perft runs to depth 6 here (44 checks, ~25 s) rather than the local
+    # default of 5. It is the only check with an oracle from outside this
+    # project, and the only one that can catch both implementations being wrong
+    # in the same direction — replaying the witness cannot, since the game
+    # contains no castling and no en passant at all. See docs/movegen.md.
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cc: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      # No solver extra: nothing in this job needs CP-SAT, only python-chess for
+      # the reference trace and legal-move dump.
+      - run: uv sync --frozen
+      - run: uv run python scripts/check_movegen.py --cc ${{ matrix.cc }} --deep
+      # The file allocates nothing, so this is not about leaks — it is about the
+      # fixed-size arrays. An index one past the end of the move list or the game
+      # array would, at -O2, quietly read neighbouring static memory and return a
+      # plausible wrong answer; under AddressSanitizer it stops instead.
+      - name: witness, rule cases and corpus under asan + ubsan
+        env:
+          ASAN_OPTIONS: detect_leaks=1
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+        run: |
+          ${{ matrix.cc }} -std=c99 -O1 -g -fsanitize=address,undefined \
+            -fno-omit-frame-pointer -Wall -Wextra -Werror -pedantic \
+            -o "$RUNNER_TEMP/lc-san" checker/longest_check.c
+          "$RUNNER_TEMP/lc-san" data/longest.pgn --expect-plies 17697 \
+            --expect-termination checkmate
+          "$RUNNER_TEMP/lc-san" --rule-cases
+          "$RUNNER_TEMP/lc-san" --corpus 5000 --seed 3
+          "$RUNNER_TEMP/lc-san" --perft-suite --max-depth 4
+
   proof:
     # The counting proof and the model, run as a reader would run them. The
     # suite covers the same ground; running the entry points catches a script

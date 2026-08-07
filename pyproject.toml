@@ -36,5 +36,15 @@ line-length = 88
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 
+# paper/ is the manuscript tree. The only Python in it regenerates slide
+# figures; nothing there is imported by the package, exercised by the tests, or
+# on any path a claim in CLAIMS.md depends on. Those scripts hold wide dict and
+# comprehension literals, so the 88-column limit is not enforced on them and
+# `make lint` stays a statement about the code the claims actually rest on.
+# Every other rule — unused names, mutable defaults, import order — still
+# applies there, and scripts/, src/, tests/ and checker/ keep the full set.
+[tool.ruff.lint.per-file-ignores]
+"paper/**/*.py" = ["E501"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

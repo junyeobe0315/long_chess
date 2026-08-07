@@ -11,6 +11,7 @@ fails the ply count.
 from __future__ import annotations
 
 import hashlib
+from collections import Counter
 from pathlib import Path
 
 import chess
@@ -86,6 +87,38 @@ def test_the_clock_never_reaches_the_limit_before_the_end(result):
 def test_no_position_occurs_five_times(result):
     over = [r for r in result.trace if r.repetitions >= 5]
     assert over == [], f"{len(over)} position(s) repeated five times"
+
+
+def test_the_maximum_position_multiplicity_is_exactly_two(result):
+    """Appendix A claims more than "fivefold never fires": no position of the
+    game occurs even three times, the maximum multiplicity being exactly two.
+
+    Nothing about the bound needs it — any value below five would do — but it is
+    what the paper says, so it is what gets pinned, and equality rather than an
+    inequality: a construction that started repeating positions three times over
+    would still pass every other check here.
+    """
+    assert max(record.repetitions for record in result.trace) == 2
+
+
+def test_the_multiplicity_survives_an_independent_recount(result):
+    """The column above is the verifier's own table, incremented as it plays.
+
+    Recounted from scratch off the traced FENs — Article 9.2's four data as
+    text, sharing no code with ``repetition_key`` or with the running counter,
+    though both still go through python-chess's rendering of the castling and
+    en-passant fields — the whole column has to come back identical.
+    """
+    counts: Counter[str] = Counter()
+    recount = []
+    for record in result.trace:
+        placement, turn, castling, en_passant = record.fen.split()[:4]
+        key = f"{placement} {turn} {castling} {en_passant}"
+        counts[key] += 1
+        recount.append(counts[key])
+
+    assert recount == [record.repetitions for record in result.trace]
+    assert max(counts.values()) == 2
 
 
 def segment_lengths_and_actors(result) -> tuple[list[int], list[str]]:

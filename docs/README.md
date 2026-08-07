@@ -2,15 +2,16 @@
 
 The proof lives in [paper/main.tex](../paper/main.tex); the claims-to-code
 map lives in [CLAIMS.md](../CLAIMS.md). These documents are the long-form
-material behind the paper's §7 (verification methodology), plus the
-project's development history.
+material behind the paper's Appendices A–B (computer verification), plus
+the project's development history.
 
 | document | role | backs |
 |---|---|---|
-| [optimality.md](optimality.md) | the whole argument in repository form, with the full correction records | paper §§2–5, App. B |
-| [abstract-model.md](abstract-model.md) | the CP-SAT/arithmetic cross-checks, constraint by constraint | paper §7.2 |
-| [dead-positions.md](dead-positions.md) | why the witness needs no dead-position decision procedure; the one deadness fact the bound uses | paper §6, §7.3 |
-| [segment-independence.md](segment-independence.md) | why the rebuilt witness's segments cannot interfere | paper §6 |
+| [optimality.md](optimality.md) | the whole argument in repository form, with the full correction records | paper §§2–5, App. B (audit record) |
+| [abstract-model.md](abstract-model.md) | the CP-SAT/arithmetic cross-checks, constraint by constraint | paper App. B |
+| [dead-positions.md](dead-positions.md) | why the witness needs no dead-position decision procedure; the one deadness fact the bound uses | paper App. A, B |
+| [segment-independence.md](segment-independence.md) | why the rebuilt witness's segments cannot interfere | paper App. A |
+| [movegen.md](movegen.md) | the independent C move generator: what it establishes, what it measurably does not, and the honest limits | paper App. A, B (future work) |
 
 ## Two implementation notes worth repeating
 

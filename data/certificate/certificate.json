@@ -1,8 +1,8 @@
 {
-  "produced": "2026-08-06T16:14:41.961192+00:00",
+  "produced": "2026-08-06T18:04:46.645555+00:00",
   "provenance": {
-    "source_commit": "c6b7060c1a3b9633b4b7281271ea41b0d92f9c7b",
-    "source_tree_hash": "34811c07df7e7c286f22fa906675400d4f732df9",
+    "source_commit": "17b18a109f9db9b652aac56dced49903344c8882",
+    "source_tree_hash": "d25350ff0a284567793b5bd403ecf63f0278a03e",
     "worktree_clean": true,
     "worktree_dirt": "",
     "python": "3.13.12",
@@ -14,12 +14,12 @@
       "note": "UNKNOWN raises Inconclusive rather than being reported as infeasible; a timeout is not a refutation."
     },
     "inputs": {
-      "uv.lock": "7b80784801f96347afb802e2269070c6eeccce49eb367076e5f0cdb83cc2fa0c",
-      "pyproject.toml": "d66b78d7a056bac1ca2b154eb7378d1cff4fb903043180138cdc15a226357711",
+      "uv.lock": "623e9f921901cb8862f110ea0683c1ff032baeccb4a16ac378e8b8d7cb8a8682",
+      "pyproject.toml": "6e4c8db0f3e0a982e97dcd486490654266c394d7baf48683d5f5e59012c083ce",
       "data/skeleton.json": "e409fe926fc213dda1738c7e4957d0ec05abaec4f46c5edad06e4f7d2a7ad853"
     }
   },
-  "commit": "c6b7060c1a3b9633b4b7281271ea41b0d92f9c7b",
+  "commit": "17b18a109f9db9b652aac56dced49903344c8882",
   "python": "3.13.12",
   "ortools": "9.15.6755",
   "claim": {

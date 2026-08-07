@@ -36,9 +36,14 @@ sequence to be one of the five, and that follows in one step:
 
 Deleting it either leaves the shape alone — when its block holds critical moves
 as well — or removes the last block entirely, and an alternating sequence one
-block shorter has exactly one switch fewer. :func:`check_terminal_endpoint_free`
-exhausts that over every shape up to twelve blocks rather than leaving it as a
-remark, because it is exactly the boundary an outside reader will ask about.
+block shorter has exactly one switch fewer. The converse direction is *false*
+and nothing here needs it: appending a terminal endpoint of the other colour
+starts a new block and so adds exactly one switch — critical `B` with a White
+quiet mate is the endpoint pattern `BW`, `S = 0` against `S = 1`.
+:func:`check_dropping_terminal_endpoint_never_adds_a_switch` exhausts the
+direction the argument does use, over every shape up to twelve blocks, rather
+than leaving it as a remark — it is exactly the boundary an outside reader will
+ask about.
 
 The refutations all start from the same place. `K = 118` forces
 `P = 96` (:func:`~long_chess.bound.pawns.equality_conditions`), which means
@@ -149,12 +154,19 @@ class TerminalEndpointCheck:
     """Maximum of ``S(critical) − S(whole)``. Must be ``≤ 0``."""
 
     @property
-    def free(self) -> bool:
+    def never_adds_a_switch(self) -> bool:
         return self.worst_increase <= 0
 
 
-def check_terminal_endpoint_free(max_blocks: int = 12) -> TerminalEndpointCheck:
-    """Exhaust the claim that the terminal endpoint never costs a switch.
+def check_dropping_terminal_endpoint_never_adds_a_switch(
+    max_blocks: int = 12,
+) -> TerminalEndpointCheck:
+    """Exhaust the claim that *dropping* the terminal endpoint costs no switch.
+
+    The direction matters and the name spells it out, because the other one is
+    false: appending a terminal endpoint of the colour the last block does not
+    have starts a new block and adds a switch. What this module needs is the
+    reverse, and only the reverse.
 
     The refutations in this module are statements about *critical* moves, while
     `S` is measured over all `K` endpoints — one of which may be a terminal
@@ -435,8 +447,8 @@ def switch_lower_bound(*, limit: int = REFUTABLE_SWITCHES) -> SwitchBound:
     Games with smaller `K` are handled by :func:`ply_bound`, which does not need
     a switch bound for them at all.
     """
-    terminal = check_terminal_endpoint_free()
-    if not terminal.free:
+    terminal = check_dropping_terminal_endpoint_never_adds_a_switch()
+    if not terminal.never_adds_a_switch:
         raise ValueError(
             "dropping the terminal endpoint can add an actor switch, so the "
             "refutations below are not about the sequence S is measured over"

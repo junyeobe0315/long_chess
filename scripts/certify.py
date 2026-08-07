@@ -53,10 +53,10 @@ from long_chess.bound import (
     MAX_PAWN_MOVES,
     MINIMUM_OVERLAPS,
     captures_plus_closing_bound,
+    check_dropping_terminal_endpoint_never_adds_a_switch,
     check_file_lemma,
     check_home_rank_lemma,
     check_origin_pair_cap,
-    check_terminal_endpoint_free,
     critical_bound,
     ending_profiles,
     equality_conditions,
@@ -192,7 +192,14 @@ def main(argv: list[str] | None = None) -> int:
     equality = equality_conditions()
     lemmas = {
         "origin_pair_cap": dataclasses.asdict(check_origin_pair_cap()),
-        "terminal_endpoint_free": dataclasses.asdict(check_terminal_endpoint_free()),
+        # The record key is deliberately not renamed alongside the function:
+        # it is the label of a committed artefact, and changing it would
+        # invalidate every certificate produced before this line was written
+        # for no gain — what the entry holds is `worst_increase <= 0`, which
+        # names no direction to get backwards.
+        "terminal_endpoint_free": dataclasses.asdict(
+            check_dropping_terminal_endpoint_never_adds_a_switch()
+        ),
         "file_lemma": dataclasses.asdict(check_file_lemma()),
         "home_rank_lemma": dataclasses.asdict(check_home_rank_lemma()),
         "invariant_obligations": [dataclasses.asdict(o) for o in verify()],

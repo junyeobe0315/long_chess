@@ -182,8 +182,9 @@ construction.
 
 The shapes were always endpoint sequences everywhere else in the project —
 `observe()` folds the mate into `phases()`, and `S` is measured over endpoints
-in `bound.blocks`, with `check_terminal_endpoint_free` bridging to
-critical-move statements. So the enumeration's coverage is unchanged: every
+in `bound.blocks`, with `check_dropping_terminal_endpoint_never_adds_a_switch`
+bridging to critical-move statements. So the enumeration's coverage is
+unchanged: every
 legal game's endpoint shape is an alternating block sequence, a game with
 `S ≤ 2` has one of the same five, and all five are refuted. No verdict moves.
 What was wrong was the sentence defining the question, plus the fact that the

@@ -155,9 +155,13 @@ are statements about critical moves. They line up in one step:
 
 Deleting it either leaves the shape alone — when its block holds critical moves
 as well — or removes the last block entirely, and an alternating sequence one
-block shorter has exactly one switch fewer. `check_terminal_endpoint_free()`
-exhausts both readings of every shape up to twelve blocks, and
-`switch_lower_bound()` refuses to return a bound if it ever fails.
+block shorter has exactly one switch fewer. The converse is false and is not
+used: *appending* an endpoint of the other colour starts a new block and adds a
+switch, which is why the critical-move pattern `B` closed by a quiet White mate
+has the endpoint pattern `B W` — `S = 1`, not `S = 0`.
+`check_dropping_terminal_endpoint_never_adds_a_switch()` exhausts both readings
+of every shape up to twelve blocks, and `switch_lower_bound()` refuses to
+return a bound if it ever fails.
 
 **9. `L ≤ 17,697`, by cases on `K`.** *(`ply_bound()`)* This is where the
 statement has to be careful, because **`S ≥ 3` is not a global fact** — every

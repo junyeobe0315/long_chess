@@ -18,3 +18,19 @@ data/certificate/longest.trace.tsv
 # Derived and regenerable — see data/README.md
 data/rebuilt.pgn
 data/m3/
+
+# LaTeX build artifacts under paper/ — only the PDFs (and sources) belong
+# in the repo; tectonic leaves none of these, latexmk/pdflatex do
+paper/**/*.aux
+paper/**/*.bbl
+paper/**/*.blg
+paper/**/*.fdb_latexmk
+paper/**/*.fls
+paper/**/*.log
+paper/**/*.nav
+paper/**/*.out
+paper/**/*.snm
+paper/**/*.synctex.gz
+paper/**/*.toc
+paper/**/*.vrb
+paper/**/*.xdv

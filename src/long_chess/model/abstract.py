@@ -18,8 +18,9 @@ A :class:`Shape` is the block sequence of a game's `K` **segment endpoints** —
 its critical moves plus, when quiet moves follow the last of them, the terminal
 endpoint that closes the game: a quiet mate, or the ply that runs out the
 75-move or repetition clock. It is the same sequence `S` is measured over in
-:mod:`long_chess.bound.blocks`, where ``check_terminal_endpoint_free`` is the
-seam between statements about it and statements about critical moves alone.
+:mod:`long_chess.bound.blocks`, where
+``check_dropping_terminal_endpoint_never_adds_a_switch`` is the seam between
+statements about it and statements about critical moves alone.
 
 The convention is load-bearing, not cosmetic. The checkmate branch below reads
 ``colours[-1]`` as the mating side, and over endpoint sequences that is a fact:
