@@ -1,18 +1,13 @@
 # The maximum length of a chess game is 17,697 plies
 
 [![tests](https://github.com/junyeobe0315/long_chess/actions/workflows/tests.yml/badge.svg)](https://github.com/junyeobe0315/long_chess/actions/workflows/tests.yml)
-![python](https://img.shields.io/badge/python-3.13-blue)
-![category](https://img.shields.io/badge/category-combinatorics_(math.CO)-blueviolet)
-![reviewed](https://img.shields.io/badge/peer%20reviewed-no-orange)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21828025-blue)](https://doi.org/10.5281/zenodo.21828025)
 
 Companion repository for the paper
 
 > **The maximum length of a chess game under the FIDE Laws is 17,697
 > plies** — Junyeop Yim.
-> Draft PDF: [paper/main.pdf](paper/main.pdf) · source: [paper/](paper/)
-> An arXiv link will be added here once the submission clears
-> (endorsement for math.CO pending).
+> [paper/main.pdf](paper/main.pdf) · source: [paper/](paper/)
 
 **The proof lives in the paper.** Tom Murphy VII built a 17,697-ply legal
 game ([SIGBOVIK 2020](https://tom7.org/chess/longest.pdf)) and left open
@@ -20,12 +15,10 @@ whether the arithmetic ceiling of 17,699 is reachable. The paper proves it
 is not: no legal chess game exceeds 17,697 plies, so the constructed game
 is longest possible.
 
-This repository is the paper's supporting evidence. It mechanically checks
-every finite case analysis the paper appeals to, verifies the 17,697-ply
-witness move by move under an independent implementation of the
-termination rules, re-decides the paper's central case analysis by two
-further mechanical methods (CP-SAT and a solver-free arithmetic checker),
-and packages every verdict into a byte-for-byte reproducible certificate.
+This repository is the supporting evidence. It exhausts the paper's finite
+case analyses by machine, verifies the 17,697-ply witness move by move under
+an independent implementation of the termination rules, and re-decides the
+central case analysis by two further methods.
 
 ## Verify
 
@@ -35,24 +28,33 @@ The whole result, replayed and judged in about a second:
 make witness
 ```
 
-Everything that runs without a constraint solver — the counting proof, the
-witness, the test suite (~8 s):
+Everything (~35 s):
 
 ```bash
-make verify-quick
+make verify
 ```
 
-Everything: quick, plus the second move generator, the cross-checks over
-every block shape under both endings, and the byte-for-byte certificate
-reproduction, which repacks and re-verifies the whole game
-(`uv sync --frozen --extra solver` first; ~45 s):
+Two steps degrade rather than fail: without a C compiler the second move
+generator skips, and without OR-Tools (`uv sync --extra solver`) the CP-SAT
+cross-check skips. Both are cross-checks on a proof that stands without them.
 
-```bash
-make verify-full
-```
+## What is checked, and what is trusted
 
-**[CLAIMS.md](CLAIMS.md)** maps each statement of the paper to the code
-that decides it, the test that pins it, and the measured runtime.
+[CLAIMS.md](CLAIMS.md) maps each statement of the paper to the code that
+decides it and the test that pins it.
+
+The mechanical checks are not the proof — the paper's argument is a hand
+argument and is checkable without running anything here. What a sceptical
+reader must trust is stated precisely in the paper's Appendix B: this
+project's summary of the FIDE termination rules, and, for the mechanical
+checks only, move generation. The second item is not a single library:
+`checker/` re-verifies the witness in C99 without python-chess, so what
+remains is the proposition that two independently implemented generators do
+not fail identically. Both were written by the same author from the same
+reading of the Laws — this is implementation independence, not author
+independence. [docs/verification.md](docs/verification.md) states the
+criteria, the mutation experiments that measure what each check is worth, and
+the limits.
 
 ## Layout
 
@@ -63,48 +65,23 @@ src/long_chess/verifier/   independent FIDE judge; imports nothing else here
 src/long_chess/bound/      the finite checks behind the proof's lemmas
 src/long_chess/model/      CP-SAT + arithmetic cross-checks (paper App. B)
 src/long_chess/skeleton/   critical-segment representation of the witness
-src/long_chess/filler/     rebuilds a distinct 17,697-ply game
 src/long_chess/search/     critical-event scheduling analysis
-checker/                   a second move generator: one C99 file, no python-chess (checker/README.md)
-tests/                     the ~5 s suite; every claim in CLAIMS.md is pinned here or in the scripts it names
-scripts/                   one entry point per check; see CLAIMS.md
-data/                      witness, skeletons, certificate (provenance: data/README.md)
-docs/                      long-form audits behind the paper's S7; docs/README.md is the index
+checker/                   a second move generator: one C99 file, no python-chess
+tests/                     the ~5 s suite
+scripts/                   one entry point per check
+data/                      witness and skeletons (provenance: data/README.md)
+docs/                      the audit record behind Appendices A-B
 ```
 
 `verifier/` deliberately depends on nothing else in the package: a move
 sequence counts as a result only when this judge passes it, and a judge
 sharing code with the search would not be independent evidence.
 
-## Status and trust
+## Citing
 
-This is our own formalisation, machine-assisted and not yet peer reviewed.
-What a sceptical reader must trust is stated precisely in the paper's
-Appendix B: the summary of the FIDE termination rules, and — for the
-mechanical checks only — the move generation of
-[python-chess](https://python-chess.readthedocs.io/en/latest/core.html)
-(version pinned in `uv.lock` and recorded in the certificate). An independent
-C implementation of the move rules now lives in [checker/](checker/) and
-re-checks the witness without python-chess, but the paper's wording has not
-yet been updated to take account of it — see [docs/movegen.md](docs/movegen.md)
-for what it establishes and what it does not. Three
-over-constraint instances repaired during this work are pinned by
-regression tests and recorded in the paper's Appendix B; the long-form
-audits live in [docs/](docs/).
-
-## Citing and archival status
-
-Cite the **paper**, not the repository; [CITATION.cff](CITATION.cff)
-carries this preference machine-readably, and GitHub's "Cite this
-repository" button reads it. The placeholders below are each filled at a
-fixed trigger point:
-
-| artefact | status | detail |
-|---|---|---|
-| arXiv link | **pending** | added once the math.CO endorsement clears and the preprint posts |
-| `v1.0.0` tag + GitHub release | done | [v1.0.0](https://github.com/junyeobe0315/long_chess/releases/tag/v1.0.0) |
-| Zenodo DOI | done | concept [10.5281/zenodo.21828025](https://doi.org/10.5281/zenodo.21828025) · v1.0.0 [10.5281/zenodo.21828026](https://doi.org/10.5281/zenodo.21828026) |
-| Software Heritage SWHID | done | [archived origin](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/junyeobe0315/long_chess) · `v1.0.0`: `swh:1:rel:1948d9aff7f545ca2e4388ed4f77f25336bce119` |
+Cite the **paper**, not the repository; [CITATION.cff](CITATION.cff) carries
+this preference machine-readably. The manuscript is a draft and has not been
+peer reviewed.
 
 ## License
 
@@ -113,25 +90,22 @@ The repository's own code, documentation and generated data are
 `data/skeleton_reference.txt` are Tom Murphy VII's published artefacts,
 redistributed with attribution (see [data/README.md](data/README.md)); the
 manuscript under [paper/](paper/) is not covered by the code license — its
-license is chosen at arXiv submission; and the board-diagram PDFs under
-`paper/figures/` embed piece images by Colin M. L. Burnett
-(GFDL/BSD/GPL), used under the BSD option — see
-[paper/figures/README.md](paper/figures/README.md).
+license is chosen at submission; and the board-diagram PDFs under
+`paper/figures/` embed piece images by Colin M. L. Burnett (GFDL/BSD/GPL),
+used under the BSD option — see [paper/figures/README.md](paper/figures/README.md).
 
 ## Attribution
-
-This work started when the author ran into the problem through the
-YouTube videos of the developer of [Augment Chess](https://augmentchess.org/)
-(증강체스) — [the short](https://www.youtube.com/shorts/ta6hvZS34ro) ·
-[the full video](https://www.youtube.com/watch?v=198K9TPT7KI) — whose
-description links Labelle's page. Everything here followed from clicking
-that link.
 
 `data/longest.pgn` and `data/skeleton_reference.txt` are Tom Murphy VII's —
 the published game and the skeleton inside
 [`longest.cc`](https://sourceforge.net/p/tom7misc/svn/HEAD/tree/trunk/chess/longest.cc)
-respectively. They are included so the results reproduce offline;
-[data/README.md](data/README.md) says exactly what came from where.
+respectively. They are included so the results reproduce offline.
+
+The author ran into the problem through the YouTube videos of the developer
+of [Augment Chess](https://augmentchess.org/) (증강체스) —
+[the short](https://www.youtube.com/shorts/ta6hvZS34ro) ·
+[the full video](https://www.youtube.com/watch?v=198K9TPT7KI) — whose
+description links Labelle's page.
 
 ## References
 

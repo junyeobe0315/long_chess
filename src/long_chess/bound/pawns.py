@@ -20,7 +20,8 @@ legal.
 
 `P − O ≤ 88` is the half that is easy to get wrong, and an earlier version of
 this module did get it wrong; see :data:`UNRESOLVED_ORIGIN_PAIR_MOVE_CAP` and
-the correction section of ``docs/optimality.md``.
+``tests/test_defects.py::TestTheUnresolvedPairCapWasFalse``, which pins the
+correction.
 """
 
 from __future__ import annotations

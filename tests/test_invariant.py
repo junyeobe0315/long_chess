@@ -18,9 +18,9 @@ from long_chess.bound.invariant import (
 
 @pytest.fixture(scope="module")
 def obligations():
-    """A small corpus: the exhaustive obligations do not depend on its
-    size, and `certify.py` runs the full-size corpus into the certificate
-    on every `make verify-full`."""
+    """A small corpus: the exhaustive obligations do not depend on its size,
+    and the C checker walks a large one of its own (`--corpus`) on every
+    `make verify`."""
     return verify(games=6, plies=100)
 
 

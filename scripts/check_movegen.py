@@ -40,7 +40,6 @@ import chess
 REPO = Path(__file__).resolve().parent.parent
 SOURCE = REPO / "checker" / "longest_check.c"
 WITNESS = REPO / "data" / "longest.pgn"
-REBUILT = REPO / "data" / "rebuilt.pgn"
 STORED_TRACE = REPO / "data" / "longest.trace.tsv"
 DUMP_SCRIPT = REPO / "scripts" / "dump_legal_moves.py"
 
@@ -184,7 +183,7 @@ def check_material(binary: Path) -> Check:
     the comparison is exhaustive rather than sampled. What it establishes is
     that two implementations of one approximation agree; the approximation
     itself is not a decision procedure for a dead position, which is the
-    subject of docs/dead-positions.md.
+    subject of docs/verification.md.
     """
     completed = run([str(binary), "--material-scan"])
     if completed.returncode != 0:
@@ -407,13 +406,6 @@ def main(argv: list[str] | None = None) -> int:
             print("[skip] legal moves   the replay produced no move dump")
 
         checks.append(report(check_corpus(binary, positions, args.seed)))
-
-        # The rebuilt game is derived data (`scripts/certify.py` makes it) and
-        # is gitignored, so a clean checkout simply has nothing to check here.
-        if REBUILT.exists():
-            checks.append(report(check_replay(binary, REBUILT, "rebuilt", [])))
-        else:
-            print(f"[skip] rebuilt       {REBUILT.relative_to(REPO)} is not present")
 
     failed = [check for check in checks if not check.ok]
     elapsed = time.perf_counter() - started

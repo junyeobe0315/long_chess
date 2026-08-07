@@ -1152,7 +1152,7 @@ static void examine_position(Position *pos, PositionFacts *facts)
 /*     the position is dead  =>  NOT NECESSARILY 1                           */
 /*                                                                          */
 /* -- and it says nothing about dead positions only a search could see, such */
-/* as a wall of blocked pawns.  docs/dead-positions.md sets out the gap.      */
+/* as a wall of blocked pawns.  docs/verification.md sets out the gap.        */
 /*                                                                          */
 /* WHICH WAY THAT CUTS, since it is easy to get backwards.  Under-detecting  */
 /* deadness makes this checker end games LATER than FIDE would.  That is the */
@@ -2204,7 +2204,7 @@ static int run_rule_cases(void)
 /* scripts/check_movegen.py reads this output and puts the same FENs to      */
 /* python-chess.  The two must agree on every line.  That is a check on two  */
 /* implementations of one approximation, not on the approximation itself --  */
-/* both decide Art. 5.2.2 by inventory alone, which docs/dead-positions.md   */
+/* both decide Art. 5.2.2 by inventory alone, which docs/verification.md     */
 /* explains is not a decision procedure for a dead position.                 */
 /* ------------------------------------------------------------------------ */
 

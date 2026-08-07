@@ -13,8 +13,8 @@ described a design that was never built, which is its own kind of unsound.
 ## What the model is for
 
 **It is not the proof.** `long_chess.bound.blocks` refutes every `S ≤ 2` shape
-by counting, with no solver — see
-[optimality.md](optimality.md#killing-the-five-shapes). This model re-decides
+by counting, with no solver — that is the paper's §4, run by
+`scripts/analyse_bound.py`. This model re-decides
 the same question by a different route, and
 `long_chess.model.independent` re-decides it by a third. Three methods
 disagreeing is how a mistake in any one of them surfaces; three agreeing is the
@@ -145,8 +145,8 @@ is what `K = 118` implies, not what checkmate implies: Scholar's mate is a legal
 checkmate leaving Black's army almost intact, and the model rejected it. The
 verdicts at `K = 118` were unaffected — the constraint is derivable there — but
 the claim below that *every legal game maps to a solution* was false for every
-other `K`. See
-[optimality.md](optimality.md#a-correction-the-checkmate-branch-was-not-a-model-of-checkmate).
+other `K`. Pinned by
+`tests/test_defects.py::TestCheckmateBranchWasNotAModel`.
 
 `resolved_files` is a **free** variable, which is what makes the coupling safe:
 every legal game satisfies both rows at its own true `f`, so the solver only has
@@ -155,8 +155,8 @@ asserting `overlaps ≥ 8` outright, would be stronger than legality.
 
 That row read `pawn_moves ≤ 32 + 8·resolved` until the unresolved cap of 4 it
 came from was found to be false — it ignored the case where one of the two pawns
-is captured by a third piece and the other runs on. See
-[optimality.md](optimality.md#a-correction-the-unresolved-cap-was-4-and-4-is-false).
+is captured by a third piece and the other runs on. Pinned by
+`tests/test_defects.py::TestTheUnresolvedPairCapWasFalse`.
 The replacement is weaker at every `f`, as a correction in that direction must
 be.
 
@@ -224,7 +224,7 @@ pieces leaves king against king, and the model forbids a closing segment after
 that. It is the one dead-position case where the material test and FIDE agree,
 and it is a true statement about legal games, so imposing it excludes none of
 them. Every other dead position is ignored, which loosens the model — see
-[dead-positions.md](dead-positions.md).
+[verification.md](verification.md).
 
 ## The soundness test, and what it cannot do
 
@@ -251,24 +251,17 @@ above is for — and both defects were found by argument, not by this test. The
 right way to read it is as a *necessary* condition that has caught nothing so
 far, kept because the day it fires it will have caught something fatal.
 
-Two further checks were listed here as though they existed. They do not, and
-this section used to read as if they did:
+One further check was listed here as though it existed. It does not, and this
+section used to read as if it did:
 
-- **The 300 batch-generated games.** They differ in filler but share the event
-  multiset, so `observe()` maps every one of them to the *same* assignment as
-  the reference. Running the model on them would re-ask a question already
-  answered, not widen the coverage. Not built, and not worth building in this
-  form — a check that widens coverage would need games with a genuinely
-  different multiset, which nothing produces.
 - **The scheduling analysis's precedence graph as an independent oracle**, so that any solution the
   model emits is a topological order of it. Not built. It only bites on a
   *feasible* answer with a candidate to inspect, and every `S ≤ 2` shape came
   back infeasible, so there has never been a solution to test. It is the same
   gap as the unbuilt concretiser below.
 
-Neither absence touches the upper bound. The proof's source of truth is the
-counting in `long_chess.bound.blocks`, not this model — see
-[optimality.md](optimality.md#killing-the-five-shapes). What they would have
+That absence does not touch the upper bound. The proof's source of truth is the
+counting in `long_chess.bound.blocks`, not this model. What the check would have
 bought is more confidence in a *feasible* verdict, and the result does not rest
 on one.
 

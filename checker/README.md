@@ -10,27 +10,15 @@ It exists to make one sentence of the paper's Appendix B smaller.
 ## What it is for
 
 Appendix B states what a sceptical reader has to trust. Two things are on that
-list. The first is the summary of the FIDE termination rules. The second is the
-move generation of python-chess, which every mechanical check in this repository
-went through — the witness verifier, the corpus checks behind the home-rank
-lemma, the trace the certificate records.
+list: the summary of the FIDE termination rules, and the move generation of
+python-chess, which every mechanical check in this repository went through.
 
 That second item is a library, and a library is the kind of thing a second
-implementation can speak to. If a different program, in a different language,
-with a different board representation, replays the same 17,697 plies and reaches
-the same verdict at every one of them, then "python-chess generates moves
-correctly" stops being something the reader takes on faith and becomes something
-two implementations agree about. A defect that survives has to be present in
-both, in the same direction, at the same positions.
-
-**This does not shrink the first item.** Both implementations were written by
-the same person from the same reading of the Laws. If that reading is wrong —
-if Article 9.6.2 does not mean what this project takes it to mean — both
-programs are wrong together and agree perfectly. What is established here is
-*implementation* independence, not *author* independence. The summary of the
-Laws remains exactly as trusted as it was, and the paper's Appendix B still
-lists it. `docs/movegen.md` sets out the independence criteria in full, and what
-each of them does and does not buy.
+implementation can speak to. **It does not shrink the first item** — both
+implementations were written by the same person from the same reading of the
+Laws, so what is established is *implementation* independence, not *author*
+independence. [`docs/verification.md`](../docs/verification.md) sets out the
+independence criteria in full, and what each does and does not buy.
 
 ## Build
 
@@ -52,8 +40,7 @@ uv run python scripts/check_movegen.py --deep   # perft to depth 6, ~30 s
 ```
 
 That script skips cleanly, returning 0, when no C compiler is installed, the way
-the CP-SAT tests skip when OR-Tools is absent. `make verify-movegen` is the same
-run; `make verify-full` includes it.
+the CP-SAT cross-check skips when OR-Tools is absent. `make verify` includes it.
 
 ## The modes, and what each establishes
 
@@ -83,7 +70,7 @@ once the suite reports one.
 
 ### `--rule-cases`
 
-Thirty hand-written positions, each pinning one Law by article number:
+Thirty-three hand-written positions, each pinning one Law by article number:
 en passant including the rank-pin case that a generator handling pins by ray
 rather than by make/test/unmake gets wrong (Art. 3.7d, 3.9), castling in eight
 variations including the one where b1 is attacked and castling is still legal
@@ -148,8 +135,8 @@ witness plays no castling move and no en passant capture — not one, in 17,697
 plies — so a replay of it exercises neither rule. The legal-move dump does:
 1,420 of its positions offer a castling move that was never played. Deliberately
 breaking castling in this file leaves the replay and the trace passing and is
-caught by the dump at ply 1,755. `docs/movegen.md` records that experiment and
-its companion.
+caught by the dump at ply 1,755. [`docs/verification.md`](../docs/verification.md)
+records that experiment and its companions.
 
 ### `--corpus <positions> [--seed S]`
 
@@ -196,9 +183,8 @@ them:
 
 ## Where to read next
 
-- [`docs/movegen.md`](../docs/movegen.md) — the design and audit document: the
+- [`docs/verification.md`](../docs/verification.md) — the audit record: the
   independence criteria, the mutation experiments that measure what each check
-  is worth, the repetition-table design, and the honest limits.
-- [`CLAIMS.md`](../CLAIMS.md) — what this establishes, marked `App. B (future
-  work)`, because the paper has not yet been updated and still lists
-  python-chess as trusted.
+  is worth, and the honest limits.
+- [`CLAIMS.md`](../CLAIMS.md) — what this establishes, mapped against the
+  paper's Appendices A and B.

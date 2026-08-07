@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 from long_chess.bound import refutations, switch_lower_bound
-from long_chess.model import ENDINGS, all_shapes, solve, validate
+from long_chess.model import ENDINGS, all_shapes
 from long_chess.model import analyse_independently as independent
 from long_chess.skeleton import load
 
@@ -34,6 +34,16 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+
+    # A missing solver is a skip with exit 0, not a failure — the same shape as
+    # `check_movegen.py` skipping when no C compiler is installed. This is a
+    # cross-check on a proof that stands without it; turning "OR-Tools is not
+    # installed" into "the proof is broken" would be a lie.
+    try:
+        from long_chess.model import solve, validate
+    except ImportError:
+        print("[skip] solve_model: OR-Tools absent (uv sync --extra solver)")
+        return 0
 
     shapes = all_shapes(args.max_blocks)
     best: dict[str, int] = {}

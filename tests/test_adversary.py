@@ -1,7 +1,7 @@
 """Adversarial tests on the home-rank lemma.
 
 The optimality result rests on this lemma alone once the counting is done, so
-it gets attacked rather than assumed. See docs/optimality.md. The expensive
+it gets attacked rather than assumed. The expensive
 artefacts — one strict-mode hunt and one exhaustive audit per colour — are
 module-scoped fixtures shared by every assertion, and the full-size attack
 lives in ``scripts/attack_lemma.py`` (seeded, reproduces exactly).

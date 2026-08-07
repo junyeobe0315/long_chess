@@ -118,7 +118,7 @@ def classify_position(board: chess.Board, repetitions: int) -> Termination:
     if board.is_stalemate():
         return Termination.STALEMATE
     # Fast first-pass only. This is python-chess's material-only test, not a
-    # decision procedure for FIDE dead positions -- see docs/dead-positions.md.
+    # decision procedure for FIDE dead positions -- see docs/verification.md.
     if board.is_insufficient_material():
         return Termination.INSUFFICIENT_MATERIAL
     if repetitions >= FIVEFOLD_REPETITION_COUNT:

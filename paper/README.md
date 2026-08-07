@@ -38,5 +38,6 @@ triple licence — see [figures/README.md](figures/README.md).
 
 ## Slides
 
-[presentation/](presentation/) holds beamer decks for the paper, in
-English and Korean; its README has the build notes.
+The talk decks live outside this repository, so that editing a slide does
+not mean cutting a new release of the paper's companion code. They need
+`data/longest.pgn` from here to regenerate their board diagrams.

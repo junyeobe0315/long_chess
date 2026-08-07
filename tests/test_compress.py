@@ -136,7 +136,15 @@ class TestCancelCycles:
 
 
 class TestCrossSegmentIndependence:
-    """See docs/segment-independence.md for the argument these check."""
+    """Two segments can never share a position, so repetition counts per
+    segment.
+
+    The argument is a monovariant: `potential` (pieces on the board, pawn
+    steps left) never rises, quiet moves leave it alone, and every critical
+    move strictly lowers it. A position in segment `i` therefore has a
+    potential no position in segment `j > i` can match. The tests below check
+    each link, and the first checks the conclusion directly.
+    """
 
     def test_the_full_game_never_repeats_a_position_across_segments(
         self, full_skeleton

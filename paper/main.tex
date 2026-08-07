@@ -229,7 +229,7 @@ exhausted by computer, the reference game was verified ply by ply
 Section~\ref{sec:switches} was cross-checked by two additional
 implementations (Appendix~\ref{app:crosschecks}). The companion
 repository \cite{repo} packages these checks, with a claims-to-code map
-(\texttt{CLAIMS.md}) and a byte-for-byte--reproducible certificate.
+(\texttt{CLAIMS.md}).
 Computation verifies the known construction and cross-checks the proof;
 it does not replace it.
 
@@ -992,10 +992,17 @@ is deliberately independent: it
 imports nothing else from the repository, so the judge shares no code
 with any producer of games.
 
-The repository also \emph{rebuilds} a different game of
-the same length --- same $118$ critical moves, freshly generated quiet
-filler; $17{,}032$ of the $17{,}697$ plies differ --- and verifies it the
-same way, so attainment does not rest on a single artefact.
+Nor does the verification rest on a single implementation of the rules.
+A second verifier --- one file of C99 in the companion repository,
+using a 0x88 mailbox board where \texttt{python-chess} uses bitboards,
+parsing the PGN and resolving its SAN for itself, written against the
+Laws without reading \texttt{python-chess} --- replays the same game to
+the same verdict: $17{,}697$ plies, checkmate, $118$ critical segments,
+a per-ply trace byte-identical to the Python verifier's across all
+$17{,}698$ rows, and the identical set of legal moves at every position
+of the game ($730{,}845$ moves in all). Its own move generation is
+checked against perft node counts published outside this project and
+against hand-written rule cases pinned to the articles of the Laws.
 
 \section{Computational cross-checks}\label{app:crosschecks}
 
@@ -1014,8 +1021,8 @@ cannot lower the block count, and starting a new block adds a switch
 Lemma~\ref{lem:homerank}, the finite obligations [H0], [H3] and [H4].
 The universally quantified obligations [H1], [H2], [H5], [H6] admit no
 enumeration: they are read off the Laws \cite{fide2023laws}, and the
-repository checks that the move generator we rely on respects them over
-a large randomised corpus of positions --- a check on the tooling, not
+repository checks that both move generators respect them, each over a
+large randomised corpus of positions --- a check on the tooling, not
 on the mathematics.
 
 To reduce the risk of an undetected error in the hand argument of
@@ -1090,22 +1097,28 @@ constraint-by-constraint audit, repaired, and pinned by regression
 tests; none survives in the verdicts above, and the full record, with
 explicit refuting games, is in the repository.
 
-What a reader of these checks must trust: the summary of the Laws in
-Section~\ref{sec:rules}, in particular that Articles 9.6.1--9.6.2 end
-games automatically and that mate takes precedence on the final ply; and
-the move generation of \texttt{python-chess} \cite{pythonchess} (version
-pinned in the repository), which underlies both the game verification
-and the corpus checks --- the obligations [H1], [H2], [H5], [H6] are
-facts about chess that we verify the library respects, not facts we
-derive from it. The reference game is an artefact produced by others
-\cite{murphy2020longest} and accepted by our verifier, separating
-producer from judge; a verification under an independently implemented
-move generator would shrink this trust further.
+What a reader of these checks must trust: first, the summary of the
+Laws in Section~\ref{sec:rules} --- in particular that Articles
+9.6.1--9.6.2 end games automatically and that mate takes precedence on
+the final ply; both implementations below follow this project's reading
+of the Laws, so their agreement cannot vouch for the reading itself.
+Second, move generation. Every check above runs through
+\texttt{python-chess} \cite{pythonchess} (version pinned in the
+repository), and the obligations [H1], [H2], [H5], [H6] are facts about
+chess that we verify the generators respect, not facts we derive from
+them; but the reference game is also re-verified by the C
+implementation of Appendix~\ref{app:witness}, which shares no code, no
+board representation and no input parsing with \texttt{python-chess},
+and whose own generation is checked against externally published perft
+counts. What remains to be trusted here is therefore not one library
+but the proposition that two independently implemented move generators
+do not fail identically at the same positions. The reference game is an
+artefact produced by others \cite{murphy2020longest} and accepted by
+both verifiers, separating producer from judge.
 The claims-to-code map (\texttt{CLAIMS.md}), invocation commands, corpus
-and search statistics, the byte-for-byte--reproducible certificate and
-the full audit record live in the companion repository \cite{repo}; the
-repository version corresponding to this paper is tag \texttt{v1.0.0},
-archived at the DOI cited there.
+and search statistics and the full audit record live in the companion
+repository \cite{repo}; the repository version corresponding to this
+paper is tag \texttt{v1.1.0}, archived at the DOI cited there.
 
 \begin{thebibliography}{99}
 
@@ -1322,8 +1335,8 @@ J.~Yim.
 \newblock Companion repository for ``The maximum length of a chess game
   under the FIDE Laws is 17,697 plies''.
 \newblock \url{https://github.com/junyeobe0315/long_chess}, 2026.
-\newblock Version \texttt{v1.0.0}, archived at
-  \url{https://doi.org/10.5281/zenodo.21828026}.
+\newblock Version \texttt{v1.1.0}, archived at
+  \url{https://doi.org/10.5281/zenodo.21828025}.
 
 \bibitem{fide2017laws}
 FIDE.

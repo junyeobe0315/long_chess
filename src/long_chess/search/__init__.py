@@ -1,6 +1,6 @@
 """Reasoning about the order of critical events, and hence about S.
 
-May import from ``verifier``, ``skeleton`` and ``filler``.
+May import from ``verifier`` and ``skeleton``.
 """
 
 from .events import (

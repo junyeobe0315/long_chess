@@ -1,6 +1,6 @@
 """Pins the known gap in our termination checking.
 
-See docs/dead-positions.md. These tests assert what the verifier *does*, gap
+See docs/verification.md. These tests assert what the verifier *does*, gap
 included, so that the day python-chess changes behaviour we find out here
 rather than inside a maximality proof.
 """

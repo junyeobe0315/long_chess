@@ -33,36 +33,14 @@ ourselves. Not regenerable offline.
 | file | made by |
 |---|---|
 | `skeleton.json`, `skeleton.pgn` | `scripts/extract_skeleton.py data/longest.pgn` |
-| `certificate/` | `scripts/certify.py data/skeleton.json -o data/certificate` |
 
-`certificate/longest.pgn` is a *different* 17,697-ply game from the reference —
-same skeleton, filler packed from scratch, 17,032 of its plies differ (665
-agree). The
-per-ply trace and the batch outputs under `m3/` are gitignored; regenerate them
-with `scripts/certify.py` and `scripts/generate_games.py`.
-
-### Reading the certificate
-
-| file | what it answers |
-|---|---|
-| `certificate.json` | everything, including *when* and *from what* — timestamp, commit, tree hash, dependency versions, input hashes, solver parameters |
-| `manifest.json` | only what a re-run must reproduce — the claim, the bound terms, the counting proof, all 16 decisions, and a SHA-256 for every artefact. No timestamp and no provenance, so it compares byte for byte from any commit |
-| `longest.trace.tsv` | the per-ply verification log. **Gitignored** — 1.5MB, and regenerable — so a fresh clone has its hash but not the file. Both files name it under `artefacts_not_committed` |
-| `models/<ending>/<shape>.pb.txt` | the CP-SAT model itself — one per shape per ending, plus a `.no-lemma` variant of each — so both the UNSATs and the no-lemma column can be re-run with any solver |
-
-`certify.py` refuses to run from a dirty worktree: a commit SHA recorded beside
-artefacts built from uncommitted code is a lie a reader has no way to detect.
-`--allow-dirty` overrides it and records `worktree_clean: false`.
-
-Check the committed certificate against a fresh run:
+The per-ply verification trace (`longest.trace.tsv`, 1.5 MB) is gitignored
+derived data; regenerate it with
 
 ```bash
-uv run --extra solver python scripts/check_certificate.py data/skeleton.json data/certificate
+uv run python -m long_chess.verifier data/longest.pgn --trace data/longest.trace.tsv
 ```
 
-Set `SOURCE_DATE_EPOCH` to pin the timestamp in `certificate.json` too, and the
-whole directory becomes reproducible byte for byte.
-
-`certificate.json`'s `source_commit` points at the commit that produced it,
-which is the commit *before* the certificate itself was added — the certificate
-is an artefact of the source, not part of it.
+`scripts/check_movegen.py` regenerates it for itself when it is absent, which
+is the stronger check anyway: it compares the C implementation against what
+python-chess says *now*, not against a file that happened to be lying around.

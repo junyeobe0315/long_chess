@@ -10,7 +10,7 @@ constraint stronger than legality produces UNSAT, and UNSAT is indistinguishable
 from a proof.
 
 This is a **cross-check, not the proof.** `long_chess.bound.blocks` settles
-`S ≥ 3` by counting, with no solver; see docs/optimality.md.
+`S ≥ 3` by counting, with no solver; run it via scripts/analyse_bound.py.
 
 .. rubric:: Which sequence the shapes are shapes of
 
