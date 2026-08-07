@@ -1,6 +1,9 @@
 # The maximum length of a chess game is 17,697 plies
 
 [![tests](https://github.com/junyeobe0315/long_chess/actions/workflows/tests.yml/badge.svg)](https://github.com/junyeobe0315/long_chess/actions/workflows/tests.yml)
+![python](https://img.shields.io/badge/python-3.13-blue)
+![category](https://img.shields.io/badge/category-combinatorics_(math.CO)-blueviolet)
+![reviewed](https://img.shields.io/badge/peer%20reviewed-no-orange)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21828025-blue)](https://doi.org/10.5281/zenodo.21828025)
 
 Companion repository for the paper
